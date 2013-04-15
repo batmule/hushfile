@@ -50,7 +50,7 @@ function handleFileSelect(evt) {
 	load_progress.textContent = '0%';
 	document.getElementById('read_progress_div').style.visibility="visible";
 	document.getElementById('encrypting').style.visibility="hidden";
-	document.getElementById('encoding').style.visibility="hidden";
+	document.getElementById('uploading').style.visibility="hidden";
 	
 	reader = new FileReader();
 	reader.onerror = errorHandler;
