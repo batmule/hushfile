@@ -86,25 +86,13 @@ function encrypt() {
 	document.getElementById('encrypting').style.color='green';
 	
 	//make the next section visible
-	document.getElementById('encoding').style.visibility="visible";
-	document.getElementById('encodingdone').className="icon-spinner icon-spin";
-	setTimeout('encode(encrypted)',1000);
-}
-
-function encode(encrypted) {
-	//base64 encode the data
-	base64 = encrypted.ciphertext.toString(CryptoJS.enc.Base64);
-	document.getElementById('encodingdone').className= "icon-check";
-	document.getElementById('encoding').style.color='green';
-	
-	//make the next section visible
 	document.getElementById('uploading').style.visibility="visible";
 	document.getElementById('uploaddone').className="icon-spinner icon-spin";
-	blob = new Blob([base64], {type: 'text/plain'});
-	setTimeout('upload(blob)',1000);
+	blob = new Blob([encrypted], {type: 'application/octet-stream'});
+	setTimeout('upload(encrypted)',1000);
 }
 
-function upload(base64blob) {
+function upload(blob) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'https://hushfile.tyknet.dk/index.php', true);
 	xhr.onload = function(e) {
@@ -122,7 +110,7 @@ function upload(base64blob) {
 			console.log("upload progress: " + progressBar.value);
 		}
 	};
-	xhr.send(base64blob);
+	xhr.send(blob);
 }
 
 // Check for the various File API support.
