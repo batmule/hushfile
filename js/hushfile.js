@@ -94,7 +94,7 @@ function encrypt() {
 
 function upload(blob) {
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'https://hushfile.tyknet.dk/index.php', true);
+	xhr.open('POST', '/server.php', true);
 	xhr.onload = function(e) {
 		document.getElementById('uploaddone').className= "icon-check";
 		document.getElementById('uploading').style.color='green';
