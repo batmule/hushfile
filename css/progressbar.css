@@ -1,0 +1,12 @@
+#read_progress_bar {
+	margin: 10px 0;
+	padding: 3px;
+	border: 1px solid #000;
+	font-size: 14px;
+}
+
+#read_progress_bar .percent {
+	background-color: #99ccff;
+	height: auto;
+	width: 0;
+}

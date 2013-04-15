@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>hushfile.it</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap-fileupload.min.css" rel="stylesheet" media="screen">
+    <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="css/progressbar.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>hushfile.it</legend>
+                
+                <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="input-append">
+                        <div class="uneditable-input span3">
+                            <i class="icon-file fileupload-exists"></i> 
+                            <span class="fileupload-preview"></span>
+                        </div>
+                        <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+                            <span class="fileupload-exists">Change</span>
+                            <input type="file" id="files" name="file">
+                        </span>
+                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                    </div>
+                </div>
+
+                <div class="input-append">
+                    <input class="input-large" type="text" id="password" name="password">
+                     <span class="add-on">Password</span>
+                </div>
+                    
+
+            </fieldset>
+        </form>
+
+        
+        <!-- Reading w/ progress bar -->
+        <div id="read_progress_div" style="visibility: hidden;">
+            <p><i id="readingdone" class="icon-check-empty"></i> <b>Reading file...</b>
+            <div class="progress progress-striped" id="read_progress_bar" style="width: 20em;">
+                <div class="percent bar bar-success">0%</div>
+            </div></p>
+        </div>
+        
+        
+        <!-- Encrypting -->
+        <div id="encrypting" style="visibility: hidden;">
+            <p><i id="encryptingdone" class="icon-check-empty"></i> <b>Encrypting...</b></p>
+        </div>
+        
+        
+        <!-- Encoding -->
+        <div id="encoding" style="visibility: hidden;">
+            <p><i id="encodingdone" class="icon-check-empty"></i> <b>BASE64 Encoding...</b></p>
+        </div>
+        
+        <!-- Uploading -->
+        <div id="uploading" style="visibility: hidden;">
+            <p><i id="uploaddone" class="icon-check-empty"></i> <b>Uploading...</b>
+            <progress min="0" max="100" value="0">0% complete</progress></p>
+        </div>
+
+    </div>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+    <script src="js/hushfile.js"></script>
+  </body>
+</html>
