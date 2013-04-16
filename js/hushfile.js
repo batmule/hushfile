@@ -79,10 +79,13 @@ function handleFileSelect(evt) {
 
 	// get file info
 	console.log(evt.target.files[0]);
-	alert(evt.target.files[0].name);
-	alert(evt.target.files[0].type);
-	alert(evt.target.files[0].size);
-	
+	filename = evt.target.files[0].name;
+	mimetype = evt.target.files[0].type;
+	filesize = evt.target.files[0].size;
+	document.getElementById('filename').innerHTML = filename;
+	document.getElementById('mimetype').innerHTML = mimetype;
+	document.getElementById('filesize').innerHTML = filesize;
+
 	// Read in the file as a binary string
 	reader.readAsBinaryString(evt.target.files[0]);
 }
@@ -120,7 +123,7 @@ function upload(blob) {
 	};
 	var formData = new FormData();
 	formData.append(filename, blob);
-	formData.append(tyk,'test');
+	formData.append('tyk','test');
 	xhr.send(formData);
 }
 

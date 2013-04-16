@@ -30,7 +30,7 @@ class UploadException extends Exception {
 				$message = "File upload stopped by extension";
 			break;
 			default:
-				$message = "Unknown upload error";
+				$message = "Unknown upload error: $code";
 			break;
 		}
 		return $message;
