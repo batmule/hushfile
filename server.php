@@ -37,12 +37,16 @@ class UploadException extends Exception {
 	}
 }
 
-if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
-	echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-	echo "Type: " . $_FILES["file"]["type"] . "<br>";
-	echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-	echo "Stored in: " . $_FILES["file"]["tmp_name"];
-} else {
-	throw new UploadException($_FILES['file']['error']);
-} 
+print_r($_REQUEST);
+
+if($_FILES) {
+	if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
+		echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+		echo "Type: " . $_FILES["file"]["type"] . "<br>";
+		echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+		echo "Stored in: " . $_FILES["file"]["tmp_name"];
+	} else {
+		throw new UploadException($_FILES['file']['error']);
+	}
+}
 ?>

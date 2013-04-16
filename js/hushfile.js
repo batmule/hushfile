@@ -122,7 +122,8 @@ function upload(blob) {
 		};
 	};
 	var formData = new FormData();
-	formData.append(filename, blob);
+	formData.append('cryptofile', blob, filename);
+	formData.append('metadata', '{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}');
 	formData.append('tyk','test');
 	xhr.send(formData);
 }
