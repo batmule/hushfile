@@ -110,7 +110,7 @@ function upload(blob) {
 		document.getElementById('uploaddone').className= "icon-check";
 		document.getElementById('uploading').style.color='green';
 		alert("upload finished!");
-		alert(xhr.responseText);
+		document.getElementById('response').innerHTML = xhr.responseText;
 	};
 
 	// Listen to the upload progress.
