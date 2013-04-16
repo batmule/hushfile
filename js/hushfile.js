@@ -1,7 +1,9 @@
 var reader;
 var load_progress = document.querySelector('.percent');
 var encrypted;
-var base64;
+var filename;
+var mimetype;
+var filesize;
 
 function randomPassword(length) {
 	chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -75,6 +77,12 @@ function handleFileSelect(evt) {
 		setTimeout('encrypt()',1000);
 	}
 
+	// get file info
+	console.log(evt.target.files[0]);
+	alert(evt.target.files[0].name);
+	alert(evt.target.files[0].type);
+	alert(evt.target.files[0].size);
+	
 	// Read in the file as a binary string
 	reader.readAsBinaryString(evt.target.files[0]);
 }
@@ -99,6 +107,7 @@ function upload(blob) {
 		document.getElementById('uploaddone').className= "icon-check";
 		document.getElementById('uploading').style.color='green';
 		alert("upload finished!");
+		alert(xhr.responseText);
 	};
 
 	// Listen to the upload progress.
@@ -107,10 +116,12 @@ function upload(blob) {
 		if (e.lengthComputable) {
 			progressBar.value = (e.loaded / e.total) * 100;
 			progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-			console.log("upload progress: " + progressBar.value);
-		}
+		};
 	};
-	xhr.send(blob);
+	var formData = new FormData();
+	formData.append(filename, blob);
+	formData.append(tyk,'test');
+	xhr.send(formData);
 }
 
 // Check for the various File API support.
