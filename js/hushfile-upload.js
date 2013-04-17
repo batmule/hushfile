@@ -67,8 +67,6 @@ function handleFileSelect(evt) {
 		// Ensure that the load_progress bar displays 100% at the end.
 		load_progress.style.width = '100%';
 		load_progress.textContent = '100%';
-		//remove .active from the progress bar to stop animating it
-		read_progress_bar.className= 'progress progress-striped';
 		document.getElementById('readingdone').className= 'icon-check';
 		document.getElementById('read_progress_div').style.color='green';
 		
