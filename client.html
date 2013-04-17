@@ -42,7 +42,7 @@
         <div id="read_progress_div" style="visibility: hidden;">
             <p><i id="readingdone" class="icon-check-empty"></i> <b>Reading file...</b>
             <div class="progress progress-striped" id="read_progress_bar" style="width: 20em;">
-                <div class="percent bar bar-success">0%</div>
+                <div class="loadpercent bar bar-success">0%</div>
             </div></p>
             
             <table class="table table-condensed">
@@ -62,7 +62,11 @@
         <!-- Uploading -->
         <div id="uploading" style="visibility: hidden;">
             <p><i id="uploaddone" class="icon-check-empty"></i> <b>Uploading...</b>
-            <progress min="0" max="100" value="0">0% complete</progress></p>
+            <progress min="0" max="100" value="0">0% complete</progress>
+            <div class="progress progress-striped" id="upload_progress_bar" style="width: 20em;">
+                <div class="uploadpercent bar bar-success">0%</div>
+            </div>
+            </p>
         </div>
         
         <!-- Response -->

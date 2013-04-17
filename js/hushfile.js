@@ -1,5 +1,6 @@
 var reader;
-var load_progress = document.querySelector('.percent');
+var load_progress = document.querySelector('.loadpercent');
+var upload_progress = document.querySelector('.uploadpercent');
 var encrypted;
 var filename;
 var mimetype;
@@ -130,8 +131,10 @@ function upload(cryptofile,metadata) {
 	var progressBar = document.querySelector('progress');
 	xhr.upload.onprogress = function(e) {
 		if (e.lengthComputable) {
-			progressBar.value = (e.loaded / e.total) * 100;
-			progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
+			temp = (e.loaded / e.total) * 100;
+			upload_progress.style.width = temp + '%';
+			upload_progress.textContent = temp + '%';
+			upload_progress.textContent = temp; // Fallback for unsupported browsers.
 		};
 	};
 	var formData = new FormData();
