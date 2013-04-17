@@ -30,6 +30,7 @@ xhr.onload = function(e) {
 		document.getElementById('filename').innerHTML = jsonmetadata.filename;
 		document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
 		document.getElementById('filesize').innerHTML = jsonmetadata.filesize;
+		document.getElementById('download').style.visibility="visible";
 	} else {
 		alert("An error was encountered downloading metadata.");
 	};
