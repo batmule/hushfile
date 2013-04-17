@@ -38,7 +38,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 	}
 } elseif($_SERVER["REQUEST_URI"] != "/") {
 	// THIS IS A FILE DOWNLOAD
-	$fileid = substr($_SERVER['REQUEST_URI'],1,strpos($_SERVER['REQUEST_URI'],"?")-1);
+	$fileid = substr($_SERVER['REQUEST_URI'],1,strpos($_SERVER['REQUEST_URI'],"?"));
 	if(strpos($_SERVER['REQUEST_URI'],"?") === false) {
 		// THIS IS A DOWNLOAD REQUEST
 		if (file_exists($datapath.$fileid)) {
@@ -49,6 +49,8 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 	} else {
 		//get command
 		$command = substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],"?")+1);
+		//remove ? from fileid
+		$fileid = substr($fileid,0,-1);
 		switch($command) {
 			case "metadata":
 				//download metadata.dat file
@@ -67,7 +69,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 				};
 			break;
 		};
-	}
+	};
 } else {
 	// THIS IS A NEW REQUEST, SHOW UPLOAD FORM
 	readfile("upload.html");
