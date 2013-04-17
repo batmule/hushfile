@@ -1,5 +1,23 @@
 function download() {
-	alert("ok, downloading");
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '/'+fileid+'?filedata', true);
+	xhr.onload = function(e) {
+		if (this.status == 200) {
+			alert("decrypting filedata...");
+			filedata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
+			var fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
+			var a = document.createElement("a");
+			a.href = window.URL.createObjectURL(fileblob);
+			a.download = document.getElementById('filename').innerHTML;
+			alert("clicking download link");
+			a.click();
+		} else {
+			alert("An error was encountered downloading filedata.");
+		};
+	};
+};
+
+xhr.send();
 }
 
 // Check for the various File API support.
@@ -14,8 +32,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 // check for cryptojs
 if (typeof CryptoJS === 'undefined') {
 	alert('CryptoJS not loaded for some reason');
-	document.getElementById('files').disabled=true;
-	document.getElementById('cancelbutton').disabled=true;
 }
 
 // find the fileid and password
