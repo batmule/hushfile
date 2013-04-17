@@ -38,14 +38,36 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 	}
 } elseif($_SERVER["REQUEST_URI"] != "/") {
 	// THIS IS A FILE DOWNLOAD
-	var_dump($_SERVER['QUERY_STRING']);
-		
-	$fileid = substr($_SERVER["REQUEST_URI"],1);
-	//if (file_exists($datapath.$fileid)) {
-	//	readfile("download.html");
-	//} else {
-	//	echo "fileid " . $fileid . " not found, expired perhaps?";
-	//}
+	$fileid = substr($_SERVER['REQUEST_URI'],1,strpos($_SERVER['REQUEST_URI'],"?")-1);
+	if(strpos($_SERVER['REQUEST_URI'],"?") === false) {
+		// THIS IS A DOWNLOAD REQUEST
+		if (file_exists($datapath.$fileid)) {
+			readfile("download.html");
+		} else {
+			echo "fileid " . $fileid . " not found, expired perhaps?";
+		};
+	} else {
+		//get command
+		$command = substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],"?")+1);
+		switch($command) {
+			case "metadata":
+				//download metadata.dat file
+				readfile($datapath.$fileid."/metadata.dat");
+			break;
+			case "filedata":
+				//download cryptofile.dat file
+				readfile($datapath.$fileid."/cryptofile.dat");
+			break;
+			default:
+				// invalid command, load regular download page
+				if (file_exists($datapath.$fileid)) {
+					readfile("download.html");
+				} else {
+					echo "fileid " . $fileid . " not found, expired perhaps?";
+				};
+			break;
+		};
+	}
 } else {
 	// THIS IS A NEW REQUEST, SHOW UPLOAD FORM
 	readfile("upload.html");
