@@ -15,6 +15,24 @@ if (typeof CryptoJS === 'undefined') {
 }
 
 // find the fileid
-fileid = window.location.pathname;
+fileid = window.location.pathname.substring(1);
 password = window.location.hash.substring(1);
-alert("ready to download file with fileid " + fileid + " and password " + password);
+//alert("ready to download file with fileid " + fileid + " and password " + password);
+
+// download and decrypt metadata
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/'+fileid, true);
+xhr.responseType = 'blob';
+
+xhr.onload = function(e) {
+	if (this.status == 200) {
+		var blob = new Blob([this.response], {type: 'application/binary'});
+		// decrypt metadata
+		metadata = CryptoJS.AES.decrypt(blob, password);
+		alert(metadata);
+	} else {
+		alert("An error was encountered downloading metadata.");
+	};
+};
+
+xhr.send();
