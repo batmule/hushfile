@@ -21,7 +21,6 @@ password = window.location.hash.substring(1);
 // download and decrypt metadata
 var xhr = new XMLHttpRequest();
 xhr.open('GET', '/'+fileid+'?metadata', true);
-xhr.responseType = 'blob';
 
 xhr.onload = function(e) {
 	if (this.status == 200) {
