@@ -105,11 +105,10 @@ function encrypt() {
 
 function upload(blob) {
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', '/server.php', true);
+	xhr.open('POST', '/', true);
 	xhr.onload = function(e) {
 		document.getElementById('uploaddone').className= "icon-check";
 		document.getElementById('uploading').style.color='green';
-		alert("upload finished!");
 		document.getElementById('response').innerHTML = xhr.responseText;
 	};
 
