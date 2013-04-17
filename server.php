@@ -1,52 +1,33 @@
 <?php
 
-class UploadException extends Exception {
-	public function __construct($code) {
-		$message = $this->codeToMessage($code);
-		parent::__construct($message, $code);
-	}
+$datapath = "/usr/local/www/filedata/"
 
-	private function codeToMessage($code) {
-		switch ($code) {
-			case UPLOAD_ERR_INI_SIZE:
-				$message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
-			break;
-			case UPLOAD_ERR_FORM_SIZE:
-				$message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
-			break;
-			case UPLOAD_ERR_PARTIAL:
-				$message = "The uploaded file was only partially uploaded";
-			break;
-			case UPLOAD_ERR_NO_FILE:
-				$message = "No file was uploaded";
-			break;
-			case UPLOAD_ERR_NO_TMP_DIR:
-				$message = "Missing a temporary folder";
-			break;
-			case UPLOAD_ERR_CANT_WRITE:
-				$message = "Failed to write file to disk";
-			break;
-			case UPLOAD_ERR_EXTENSION:
-				$message = "File upload stopped by extension";
-			break;
-			default:
-				$message = "Unknown upload error: $code";
-			break;
-		}
-		return $message;
-	}
+function get_uniqid() {
+	fileid = uniqid();
+	if (file_exists($datapath.$fileid)) {
+		//somehow this ID already exists, call recursively
+		$fileid = get_uniqid();
+	};
+	return $fileid;
 }
 
-print_r($_REQUEST);
 
-if($_FILES) {
-	if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
-		echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-		echo "Type: " . $_FILES["file"]["type"] . "<br>";
-		echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-		echo "Stored in: " . $_FILES["file"]["tmp_name"];
-	} else {
-		throw new UploadException($_FILES['file']['error']);
-	}
+if(isset($_REQUEST['cryptofile']) && isset $_REQUEST['metadata']) {
+	// first get a new unique ID for this file
+	$fileid = get_uniqid();
+	$cryptofile = $datapath.$fileid."cryptofile";
+	$metadatafile = $datapath.$fileid."metadata";
+	
+	$fh = fopen($cryptofile, 'w') or die("can't open cryptofile");
+	fwrite($fh, $_REQUEST['cryptofile']);
+	fclose($fh);
+
+	$fh = fopen($metadatafile, 'w') or die("can't open metadatafile");
+	fwrite($fh, $_REQUEST['metadata']);
+	fclose($fh);
+
+	echo json_encode(array("status" => "ok", "fileid" => $fileid));
+} else {
+	echo json_encode(array("status" => "fail", "fileid" => ""));
 }
 ?>
