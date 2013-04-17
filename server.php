@@ -1,6 +1,6 @@
 <?php
 
-$datapath = "/usr/local/www/filedata/"
+$datapath = "/usr/local/www/filedata/";
 
 function get_uniqid() {
 	fileid = uniqid();
