@@ -10,15 +10,7 @@ function get_uniqid() {
 	return $fileid;
 }
 
-if($_SERVER["REQUEST_URI"] != "/") {
-	// THIS IS A FILE DOWNLOAD
-	$fileid = substr($_SERVER["REQUEST_URI"],1);
-	if (file_exists($datapath.$fileid)) {
-		echo "file ready to be downloaded";
-	} else {
-		echo "file not found, expired perhaps?";
-	}
-} elseif($_SERVER["REQUEST_URI"] == "/upload") {
+if($_SERVER["REQUEST_URI"] == "/upload") {
 	// THIS IS A FILE UPLOAD
 	if(isset($_REQUEST['cryptofile']) && isset($_REQUEST['metadata'])) {
 		// first get a new unique ID for this file
@@ -43,6 +35,14 @@ if($_SERVER["REQUEST_URI"] != "/") {
 		echo json_encode(array("status" => "ok", "fileid" => $fileid));
 	} else {
 		die(json_encode(array("status" => "invalid request", "fileid" => "")));
+	}
+} elseif($_SERVER["REQUEST_URI"] != "/") {
+	// THIS IS A FILE DOWNLOAD
+	$fileid = substr($_SERVER["REQUEST_URI"],1);
+	if (file_exists($datapath.$fileid)) {
+		echo "file ready to be downloaded";
+	} else {
+		echo "file not found, expired perhaps?";
 	}
 } else {
 	// THIS IS A NEW REQUEST, SHOW UPLOAD FORM
