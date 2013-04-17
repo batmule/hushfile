@@ -3,7 +3,7 @@
 $datapath = "/usr/local/www/filedata/";
 
 function get_uniqid() {
-	fileid = uniqid();
+	$fileid = uniqid();
 	if (file_exists($datapath.$fileid)) {
 		//somehow this ID already exists, call recursively
 		$fileid = get_uniqid();
