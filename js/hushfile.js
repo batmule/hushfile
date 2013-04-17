@@ -92,18 +92,25 @@ function handleFileSelect(evt) {
 
 function encrypt() {
 	//encrypt the data
-	encrypted = CryptoJS.AES.encrypt(reader.result, document.getElementById('password').value);
+	cryptofile = CryptoJS.AES.encrypt(reader.result, document.getElementById('password').value);
+	cryptofileblob = new Blob([cryptofile], {type: 'application/octet-stream'});
+
+	//encrypt the metadata
+	metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
+	metadatablob = new Blob([metadata], {type: 'application/octet-stream'});
+
+	//done encrypting
 	document.getElementById('encryptingdone').className="icon-check";
 	document.getElementById('encrypting').style.color='green';
 	
 	//make the next section visible
 	document.getElementById('uploading').style.visibility="visible";
 	document.getElementById('uploaddone').className="icon-spinner icon-spin";
-	blob = new Blob([encrypted], {type: 'application/octet-stream'});
-	setTimeout('upload(encrypted)',1000);
+
+	setTimeout('upload(cryptofileblob,metadatablob)',1000);
 }
 
-function upload(blob) {
+function upload(cryptofileblob,metadatablob) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', '/', true);
 	xhr.onload = function(e) {
@@ -121,9 +128,8 @@ function upload(blob) {
 		};
 	};
 	var formData = new FormData();
-	formData.append('cryptofile', blob, filename);
-	formData.append('metadata', '{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}');
-	formData.append('tyk','test');
+	formData.append('cryptofile', cryptofileblob);
+	formData.append('metadata', metadatablob);
 	xhr.send(formData);
 }
 
