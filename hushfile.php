@@ -38,12 +38,14 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 	}
 } elseif($_SERVER["REQUEST_URI"] != "/") {
 	// THIS IS A FILE DOWNLOAD
+	var_dump($_SERVER['QUERY_STRING']);
+		
 	$fileid = substr($_SERVER["REQUEST_URI"],1);
-	if (file_exists($datapath.$fileid)) {
-		readfile("download.html");
-	} else {
-		echo "fileid " . $fileid . " not found, expired perhaps?";
-	}
+	//if (file_exists($datapath.$fileid)) {
+	//	readfile("download.html");
+	//} else {
+	//	echo "fileid " . $fileid . " not found, expired perhaps?";
+	//}
 } else {
 	// THIS IS A NEW REQUEST, SHOW UPLOAD FORM
 	readfile("upload.html");
