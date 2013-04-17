@@ -16,5 +16,5 @@ if (typeof CryptoJS === 'undefined') {
 
 // find the fileid
 fileid = window.location.pathname;
-
-alert("ready to download file with fileid " + fileid);
+password = window.location.hash.substring(1);
+alert("ready to download file with fileid " + fileid + " and password " + password);
