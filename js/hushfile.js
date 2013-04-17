@@ -113,6 +113,9 @@ function upload(cryptofile,metadata) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', '/upload', true);
 	xhr.onload = function(e) {
+		//make sure progress is at 100%
+		upload_progress.style.width = '100%';
+		upload_progress.textContent = '100%';
 		//parse json reply
 		document.getElementById('debug').innerHTML = xhr.responseText;
 		var responseobject = JSON.parse(xhr.responseText);
@@ -131,10 +134,9 @@ function upload(cryptofile,metadata) {
 	var progressBar = document.querySelector('progress');
 	xhr.upload.onprogress = function(e) {
 		if (e.lengthComputable) {
-			temp = (e.loaded / e.total) * 100;
+			temp = Math.round((e.loaded / e.total) * 100);
 			upload_progress.style.width = temp + '%';
 			upload_progress.textContent = temp + '%';
-			upload_progress.textContent = temp; // Fallback for unsupported browsers.
 		};
 	};
 	var formData = new FormData();
