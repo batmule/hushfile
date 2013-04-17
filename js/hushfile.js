@@ -119,7 +119,7 @@ function upload(cryptofile,metadata) {
 			document.getElementById('uploading').style.color='green';
 			//get current URL
 			url = window.location.protocol + '://' + window.location.host + '/';
-			document.getElementById('response').innerHTML = 'Success! Your URL is: <a href="/'+responseobject.fileid+'#'+document.getElementById('password').value+'">/'+url+responseobject.fileid+'#'+document.getElementById('password').value+'</a>';
+			document.getElementById('response').innerHTML = 'Success! Your URL is: <a href="/'+responseobject.fileid+'#'+document.getElementById('password').value+'">'+url+responseobject.fileid+'#'+document.getElementById('password').value+'</a>';
 		} else {
 			document.getElementById('response').innerHTML = 'Something went wrong. Sorry about that. <a href="/">Try again.</a>';
 		};
