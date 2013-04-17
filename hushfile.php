@@ -46,6 +46,6 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 	}
 } else {
 	// THIS IS A NEW REQUEST, SHOW UPLOAD FORM
-	readfile("client.html");
+	readfile("upload.html");
 }
 ?>
