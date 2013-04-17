@@ -14,7 +14,7 @@ if (typeof CryptoJS === 'undefined') {
 	document.getElementById('cancelbutton').disabled=true;
 }
 
-// find the fileid
+// find the fileid and password
 fileid = window.location.pathname.substring(1);
 password = window.location.hash.substring(1);
 
@@ -25,10 +25,12 @@ xhr.responseType = 'blob';
 
 xhr.onload = function(e) {
 	if (this.status == 200) {
-		var blob = new Blob([this.response], {type: 'application/binary'});
 		// decrypt metadata
-		metadata = CryptoJS.AES.decrypt(blob, password);
-		alert(metadata);
+		metadata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
+		var jsonmetadata = JSON.parse(metadata);
+		document.getElementById('filename').innerHTML = jsonmetadata.filename;
+		document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
+		document.getElementById('filesize').innerHTML = jsonmetadata.filesize;
 	} else {
 		alert("An error was encountered downloading metadata.");
 	};
