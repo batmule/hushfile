@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_URI"] != "/") {
 	} else {
 		echo "file not found, expired perhaps?";
 	}
-elseif(isset($_REQUEST['cryptofile']) && isset($_REQUEST['metadata'])) {
+} elseif(isset($_REQUEST['cryptofile']) && isset($_REQUEST['metadata'])) {
 	// THIS IS A FILE UPLOAD
 	
 	// first get a new unique ID for this file
