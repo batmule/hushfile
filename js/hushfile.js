@@ -113,6 +113,7 @@ function upload(cryptofile,metadata) {
 	xhr.open('POST', '/upload', true);
 	xhr.onload = function(e) {
 		//parse json reply
+		document.getElementById('debug').innerHTML = xhr.responseText;
 		var responseobject = JSON.parse(xhr.responseText);
 		if (responseobject.status=='ok') {
 			document.getElementById('uploaddone').className= "icon-check";
