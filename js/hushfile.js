@@ -112,7 +112,7 @@ function encrypt() {
 
 function upload(cryptofileblob,metadatablob) {
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', '/', true);
+	xhr.open('POST', '/upload', true);
 	xhr.onload = function(e) {
 		document.getElementById('uploaddone').className= "icon-check";
 		document.getElementById('uploading').style.color='green';
