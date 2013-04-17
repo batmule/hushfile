@@ -15,10 +15,8 @@ function download() {
 			alert("An error was encountered downloading filedata.");
 		};
 	};
+	xhr.send();
 };
-
-xhr.send();
-}
 
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
