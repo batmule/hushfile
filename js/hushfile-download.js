@@ -4,7 +4,7 @@ function download() {
 	xhr.onload = function(e) {
 		if (this.status == 200) {
 			alert("decrypting filedata...");
-			filedata = CryptoJS.AES.decrypt(this.response, password).toString();
+			filedata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
 			var fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
 			var a = document.createElement("a");
 			a.href = window.URL.createObjectURL(fileblob);
@@ -43,7 +43,7 @@ xhr.open('GET', '/'+fileid+'?metadata', true);
 xhr.onload = function(e) {
 	if (this.status == 200) {
 		// decrypt metadata
-		metadata = CryptoJS.AES.decrypt(this.response, password).toString();
+		metadata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
 		var jsonmetadata = JSON.parse(metadata);
 		document.getElementById('filename').innerHTML = jsonmetadata.filename;
 		document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
