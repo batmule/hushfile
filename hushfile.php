@@ -18,29 +18,32 @@ if($_SERVER["REQUEST_URI"] != "/") {
 	} else {
 		echo "file not found, expired perhaps?";
 	}
-} elseif(isset($_REQUEST['cryptofile']) && isset($_REQUEST['metadata'])) {
+} elseif($_SERVER["REQUEST_URI"] == "/upload") {
 	// THIS IS A FILE UPLOAD
-	
-	// first get a new unique ID for this file
-	$fileid = get_uniqid();
-	$cryptofile = $datapath.$fileid."/cryptofile.dat";
-	$metadatafile = $datapath.$fileid."/metadata.dat";
-	
-	// create folder for this file
-	mkdir($datapath.$fileid);
-	
-	// write encrypted file
-	$fh = fopen($cryptofile, 'w') or die(json_encode(array("status" => "unable to write cryptofile", "fileid" => "")));
-	fwrite($fh, $_REQUEST['cryptofile']);
-	fclose($fh);
+	if(isset($_REQUEST['cryptofile']) && isset($_REQUEST['metadata'])) {
+		// first get a new unique ID for this file
+		$fileid = get_uniqid();
+		$cryptofile = $datapath.$fileid."/cryptofile.dat";
+		$metadatafile = $datapath.$fileid."/metadata.dat";
+		
+		// create folder for this file
+		mkdir($datapath.$fileid);
+		
+		// write encrypted file
+		$fh = fopen($cryptofile, 'w') or die(json_encode(array("status" => "unable to write cryptofile", "fileid" => "")));
+		fwrite($fh, $_REQUEST['cryptofile']);
+		fclose($fh);
 
-	//write metadata file
-	$fh = fopen($metadatafile, 'w') or die(json_encode(array("status" => "unable to write metadatafile", "fileid" => "")));
-	fwrite($fh, $_REQUEST['metadata']);
-	fclose($fh);
+		//write metadata file
+		$fh = fopen($metadatafile, 'w') or die(json_encode(array("status" => "unable to write metadatafile", "fileid" => "")));
+		fwrite($fh, $_REQUEST['metadata']);
+		fclose($fh);
 
-	// encode json reply
-	echo json_encode(array("status" => "ok", "fileid" => $fileid));
+		// encode json reply
+		echo json_encode(array("status" => "ok", "fileid" => $fileid));
+	} else {
+		die(json_encode(array("status" => "invalid request", "fileid" => "")));
+	}
 } else {
 	// THIS IS A NEW REQUEST, SHOW UPLOAD FORM
 	readfile("client.html");
