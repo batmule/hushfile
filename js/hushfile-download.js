@@ -3,7 +3,7 @@ function hex2bin(hex) {
 	for (i; i < l; i += 2) {
 		bytes.push(parseInt(hex.substr(i, 2), 16))
 	}
-	return String.fromCharCode.apply(String, bytes)   
+	return bytes;
 }
 
 function download() {
