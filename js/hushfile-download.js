@@ -1,11 +1,22 @@
+function hex2bin(hex) {
+	var i = 0, l = hex.length - 1, bytes = []
+	for (i; i < l; i += 2) {
+		bytes.push(parseInt(hex.substr(i, 2), 16))
+	}
+	return String.fromCharCode.apply(String, bytes)   
+}
+
 function download() {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', '/'+fileid+'?filedata', true);
 	xhr.onload = function(e) {
 		if (this.status == 200) {
 			alert("decrypting filedata...");
-			filedata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
+			var hexfiledata = CryptoJS.AES.decrypt(this.response, password);
+			var filedata = hex2bin(hexfiledata);
 			var fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
+			
+			// download prompt
 			var a = document.createElement("a");
 			a.href = window.URL.createObjectURL(fileblob);
 			a.download = document.getElementById('filename').innerHTML;
