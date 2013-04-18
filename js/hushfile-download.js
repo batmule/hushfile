@@ -42,7 +42,7 @@ function download() {
 		if (this.status == 200) {
 			alert("decrypting filedata...");
 			hexfiledata = CryptoJS.AES.decrypt(this.response, password);
-			filedata = hex2bin(hexfiledata);
+			filedata = hex2bin(hexfiledata.toString());
 			fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
 			
 			// download prompt
