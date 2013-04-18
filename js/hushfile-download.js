@@ -12,12 +12,12 @@ function download() {
 	xhr.onload = function(e) {
 		if (this.status == 200) {
 			alert("decrypting filedata...");
-			var hexfiledata = CryptoJS.AES.decrypt(this.response, password);
-			var filedata = hex2bin(hexfiledata);
-			var fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
+			hexfiledata = CryptoJS.AES.decrypt(this.response, password);
+			filedata = hex2bin(hexfiledata);
+			fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
 			
 			// download prompt
-			var a = document.createElement("a");
+			a = document.createElement("a");
 			a.href = window.URL.createObjectURL(fileblob);
 			a.download = document.getElementById('filename').innerHTML;
 			alert("clicking download link");
