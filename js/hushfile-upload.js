@@ -91,10 +91,12 @@ function handleFileSelect(evt) {
 
 function encrypt() {
 	//encrypt the data
-	cryptofile = CryptoJS.AES.encrypt(reader.result, document.getElementById('password').value);
+	//cryptofile = CryptoJS.AES.encrypt(reader.result, document.getElementById('password').value);
+	cryptofile = reader.result;
 
 	//encrypt the metadata
-	metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
+	//metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
+	metadata = '{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}';
 
 	//done encrypting
 	document.getElementById('encryptingdone').className="icon-check";
