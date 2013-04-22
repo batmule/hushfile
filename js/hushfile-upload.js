@@ -100,7 +100,7 @@ function encrypt() {
 	for (var i = 0; i < ui8a.length; ++i) {
 		alert("byte " + i + " is ascii " + ui8a[i]);
 	}
-	cryptofile = new Blob([ui8a.buffer], { type: document.getElementById('mimetype').innerHTML });
+	cryptofile = new Blob([ui8a], { type: document.getElementById('mimetype').innerHTML });
 
 	//encrypt the metadata
 	//metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
