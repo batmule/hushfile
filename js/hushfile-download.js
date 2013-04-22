@@ -3,10 +3,9 @@ function download() {
 	xhr.open('GET', '/'+fileid+'?filedata', true);
 	xhr.onload = function(e) {
 		if (this.status == 200) {
-			//alert("decrypting filedata...");
-			//decryptedwords = CryptoJS.AES.decrypt(this.response, password);
-			//filedata = CryptoJS.enc.Latin1.stringify(decryptedwords);
-			filedata = this.response;
+			alert("decrypting filedata...");
+			decryptedwords = CryptoJS.AES.decrypt(this.response, password);
+			filedata = CryptoJS.enc.Latin1.stringify(decryptedwords);
 			fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
 
 			// download prompt

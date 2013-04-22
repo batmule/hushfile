@@ -55,14 +55,14 @@ function handleFileSelect(evt) {
 	document.getElementById('encrypting').style.visibility="hidden";
 	document.getElementById('uploading').style.visibility="hidden";
 	
+	//create filereader object
 	reader = new FileReader();
+	
+	//register event handlers
 	reader.onerror = errorHandler;
 	reader.onprogress = updateProgress;
 
-	reader.onabort = function(e) {
-		alert('File read cancelled');
-	};
-
+	// runs after file reading completes
 	reader.onload = function(e) {
 		// Ensure that the load_progress bar displays 100% at the end.
 		load_progress.style.width = '100%';
@@ -76,8 +76,7 @@ function handleFileSelect(evt) {
 		setTimeout('encrypt()',1000);
 	}
 
-	// get file info
-	console.log(evt.target.files[0]);
+	// get file info and show it to the user
 	filename = evt.target.files[0].name;
 	mimetype = evt.target.files[0].type;
 	filesize = evt.target.files[0].size;
@@ -85,36 +84,28 @@ function handleFileSelect(evt) {
 	document.getElementById('mimetype').innerHTML = mimetype;
 	document.getElementById('filesize').innerHTML = filesize;
 
-	// Read in the file as a binary string
-	//reader.readAsBinaryString(evt.target.files[0]);
-	//reader.readAsDataURL(evt.target.files[0]);
+	// begin reading the file
 	reader.readAsArrayBuffer(evt.target.files[0]);
 }
 
 function encrypt() {
 	//encrypt the data
-	//cryptofile = CryptoJS.AES.encrypt(reader.result, document.getElementById('password').value);
-	//cryptofile = reader.result;
-	
-	cryptofile = new Uint8Array(reader.result);
-	//for (var i = 0; i < ui8a.length; ++i) {
-	//	alert("byte " + i + " is ascii " + ui8a[i] );
-	//}
-	//cryptofile = new Blob([ui8a], { type: document.getElementById('mimetype').innerHTML });
+	ui8a = new Uint8Array(reader.result);
+	cryptofile = CryptoJS.AES.encrypt(ui8a, document.getElementById('password').value);
+	cryptoblob = new Blob([cryptofile], { type: document.getElementById('mimetype').innerHTML });
 
 	//encrypt the metadata
-	//metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
-	metadata = '{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}';
+	metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
 
 	//done encrypting
 	document.getElementById('encryptingdone').className="icon-check";
 	document.getElementById('encrypting').style.color='green';
-	
+
 	//make the next section visible
 	document.getElementById('uploading').style.visibility="visible";
 	document.getElementById('uploaddone').className="icon-spinner icon-spin";
 
-	setTimeout('upload(cryptofile,metadata)',1000);
+	setTimeout('upload(cryptoblob,metadata)',1000);
 }
 
 function upload(cryptofile,metadata) {
