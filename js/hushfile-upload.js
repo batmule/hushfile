@@ -98,7 +98,7 @@ function encrypt() {
 	
 	var ui8a = new Uint8Array(reader.result);
 	for (var i = 0; i < ui8a.length; ++i) {
-		alert("byte " + i + " is ascii " + ui8a[i]);
+		alert("byte " + i + " is ascii " + ui8a[i] );
 	}
 	cryptofile = new Blob([ui8a], { type: document.getElementById('mimetype').innerHTML });
 
@@ -125,16 +125,20 @@ function upload(cryptofile,metadata) {
 		upload_progress.style.width = '100%';
 		upload_progress.textContent = '100%';
 		//parse json reply
-		document.getElementById('debug').innerHTML = xhr.responseText;
-		var responseobject = JSON.parse(xhr.responseText);
-		if (responseobject.status=='ok') {
-			document.getElementById('uploaddone').className= "icon-check";
-			document.getElementById('uploading').style.color='green';
-			//get current URL
-			url = window.location.protocol + '://' + window.location.host + '/';
-			document.getElementById('response').innerHTML = '<p><i class="icon-check"></i> <b><span style="color: green;">Success! Your URL is:</span></b><br> <a class="btn btn-success" href="/'+responseobject.fileid+'#'+document.getElementById('password').value+'">'+url+responseobject.fileid+'#'+document.getElementById('password').value+'</a>';
-		} else {
-			document.getElementById('response').innerHTML = 'Something went wrong. Sorry about that. <a href="/">Try again.</a>';
+		document.getElementById('debugdiv').innerHTML = '<h4>Debug response</h4><p>' + xhr.responseText;
+		try {
+			var responseobject = JSON.parse(xhr.responseText);
+			if (responseobject.status=='ok') {
+				document.getElementById('uploaddone').className= "icon-check";
+				document.getElementById('uploading').style.color='green';
+				//get current URL
+				url = window.location.protocol + '://' + window.location.host + '/';
+				document.getElementById('response').innerHTML = '<p><i class="icon-check"></i> <b><span style="color: green;">Success! Your URL is:</span></b><br> <a class="btn btn-success" href="/'+responseobject.fileid+'#'+document.getElementById('password').value+'">'+url+responseobject.fileid+'#'+document.getElementById('password').value+'</a>';
+			} else {
+				document.getElementById('response').innerHTML = 'Something went wrong. Sorry about that. <a href="/">Try again.</a>';
+			}
+		} catch(err) {
+			document.getElementById('response').innerHTML = 'Something went wrong: ' + err;
 		};
 	};
 
