@@ -34,7 +34,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		// encode json reply
 		echo json_encode(array("status" => "ok", "fileid" => $fileid));
 	} else {
-		die(json_encode(array("status" => "invalid request", "fileid" => "")));
+		die(json_encode(array("status" => "invalid request, missing content", "fileid" => "")));
 	}
 } elseif($_SERVER["REQUEST_URI"] != "/") {
 	// THIS IS A FILE DOWNLOAD
