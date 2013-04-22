@@ -86,13 +86,21 @@ function handleFileSelect(evt) {
 	document.getElementById('filesize').innerHTML = filesize;
 
 	// Read in the file as a binary string
-	reader.readAsBinaryString(evt.target.files[0]);
+	//reader.readAsBinaryString(evt.target.files[0]);
+	//reader.readAsDataURL(evt.target.files[0]);
+	reader.readAsArrayBuffer(evt.target.files[0]);
 }
 
 function encrypt() {
 	//encrypt the data
 	//cryptofile = CryptoJS.AES.encrypt(reader.result, document.getElementById('password').value);
-	cryptofile = reader.result;
+	//cryptofile = reader.result;
+	
+	var ui8a = new Uint8Array(reader.result);
+	for (var i = 0; i < ui8a.length; ++i) {
+		alert("byte " + i + " is ascii " + ui8a[i]);
+	}
+	cryptofile = new Blob([ui8a.buffer], { type: document.getElementById('mimetype').innerHTML });
 
 	//encrypt the metadata
 	//metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
