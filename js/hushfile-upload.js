@@ -116,7 +116,6 @@ function upload(cryptoobject,metadataobject) {
 		upload_progress.style.width = '100%';
 		upload_progress.textContent = '100%';
 		//parse json reply
-		document.getElementById('debugdiv').innerHTML = '<h4>Debug response</h4><p>' + xhr.responseText;
 		try {
 			var responseobject = JSON.parse(xhr.responseText);
 			if (responseobject.status=='ok') {
