@@ -31,7 +31,7 @@ function download() {
 			a.download = document.getElementById('filename').innerHTML;
 			linkText = document.createTextNode("Download");
 			a.appendChild(linkText);
-			a.class = "btn btn-success";
+			a.className = "btn btn-success";
 			document.getElementById('downloaddiv').appendChild(a);
 			document.getElementById('downloaddiv').style.visibility="visible";
 		} else {
