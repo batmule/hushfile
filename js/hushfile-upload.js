@@ -142,11 +142,10 @@ function encrypt() {
 	//encrypt the data
 	ui8a = new Uint8Array(reader.result);
 	wordarray = CryptoJS.enc.u8array.parse(ui8a);
-	cryptofile = CryptoJS.AES.encrypt(wordarray, document.getElementById('password').value);
-	//cryptoblob = new Blob([cryptofile], { type: document.getElementById('mimetype').innerHTML });
+	cryptoobject = CryptoJS.AES.encrypt(wordarray, document.getElementById('password').value);
 
 	//encrypt the metadata
-	metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
+	metadataobject = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
 
 	//done encrypting
 	document.getElementById('encryptingdone').className="icon-check";
@@ -156,10 +155,10 @@ function encrypt() {
 	document.getElementById('uploading').style.visibility="visible";
 	document.getElementById('uploaddone').className="icon-spinner icon-spin";
 
-	setTimeout('upload(cryptofile,metadata)',1000);
+	setTimeout('upload(cryptoobject,metadataobject)',1000);
 }
 
-function upload(cryptofile,metadata) {
+function upload(cryptoobject,metadataobject) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', '/upload', true);
 	xhr.onload = function(e) {
@@ -194,10 +193,10 @@ function upload(cryptofile,metadata) {
 		};
 	};
 	var formData = new FormData();
-	formData.append('cryptofile', cryptofile);
-	formData.append('metadata', metadata);
+	formData.append('cryptofile', cryptoobject);
+	formData.append('metadata', metadataobject);
 	xhr.send(formData);
-}
+};
 
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -206,14 +205,14 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 	alert('The File APIs are not fully supported in this browser.');
 	document.getElementById('files').disabled=true;
 	document.getElementById('cancelbutton').disabled=true;
-}
+};
 
 // check for cryptojs
 if (typeof CryptoJS === 'undefined') {
 	alert('CryptoJS not loaded for some reason');
 	document.getElementById('files').disabled=true;
 	document.getElementById('cancelbutton').disabled=true;
-}
+};
 
 // create random password
 document.getElementById('password').value=randomPassword(40);
