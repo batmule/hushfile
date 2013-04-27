@@ -6,6 +6,56 @@ var filename;
 var mimetype;
 var filesize;
 
+CryptoJS.enc.u8array = {
+	/**
+	 * from https://groups.google.com/forum/?fromgroups=#!topic/crypto-js/TOb92tcJlU0
+	 * Converts a word array to a Uint8Array.
+	 * @param {WordArray} wordArray The word array.
+	 * @return {Uint8Array} The Uint8Array.
+	 * @static
+	 * @example
+	 *
+	 *     var u8arr = CryptoJS.enc.u8array.stringify(wordArray);
+	 */
+	stringify: function (wordArray) {
+		// Shortcuts
+		var words = wordArray.words;
+		var sigBytes = wordArray.sigBytes;
+
+		// Convert
+		var u8 = new Uint8Array(sigBytes);
+		for (var i = 0; i < sigBytes; i++) {
+			var byte = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+			u8[i]=byte;
+		}
+
+		return u8;
+	},
+
+	/**
+	 * from https://groups.google.com/forum/?fromgroups=#!topic/crypto-js/TOb92tcJlU0
+	 * Converts a Uint8Array to a word array.
+	 * @param {string} u8Str The Uint8Array.
+	 * @return {WordArray} The word array.
+	 * @static
+	 * @example
+	 *
+	 *     var wordArray = CryptoJS.enc.u8array.parse(u8arr);
+	 */
+	parse: function (u8arr) {
+		// Shortcut
+		var len = u8arr.length;
+
+		// Convert
+		var words = [];
+		for (var i = 0; i < len; i++) {
+			words[i >>> 2] |= (u8arr[i] & 0xff) << (24 - (i % 4) * 8);
+		}
+
+		return CryptoJS.lib.WordArray.create(words, len);
+	}
+};
+
 function randomPassword(length) {
 	chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 	pass = "";
@@ -14,11 +64,11 @@ function randomPassword(length) {
 		pass += chars.charAt(i);
 	}
 	return pass;
-}
+};
 
 function abortRead() {
 	reader.abort();
-}
+};
 
 function errorHandler(evt) {
 	switch(evt.target.error.code) {
@@ -33,7 +83,7 @@ function errorHandler(evt) {
 		default:
 			alert('An error occurred reading this file.');
 	};
-}
+};
 
 function updateProgress(evt) {
 	// evt is an ProgressEvent.
@@ -43,9 +93,9 @@ function updateProgress(evt) {
 		if (percentLoaded < 100) {
 			load_progress.style.width = percentLoaded + '%';
 			load_progress.textContent = percentLoaded + '%';
-		}
-	}
-}
+		};
+	};
+};
 
 function handleFileSelect(evt) {
 	// Reset load_progress indicator on new file selection.
@@ -74,7 +124,7 @@ function handleFileSelect(evt) {
 		document.getElementById('encrypting').style.visibility="visible";
 		document.getElementById('encryptingdone').className="icon-spinner icon-spin";
 		setTimeout('encrypt()',1000);
-	}
+	};
 
 	// get file info and show it to the user
 	filename = evt.target.files[0].name;
@@ -86,12 +136,13 @@ function handleFileSelect(evt) {
 
 	// begin reading the file
 	reader.readAsArrayBuffer(evt.target.files[0]);
-}
+};
 
 function encrypt() {
 	//encrypt the data
 	ui8a = new Uint8Array(reader.result);
-	cryptofile = CryptoJS.AES.encrypt(ui8a, document.getElementById('password').value);
+	wordarray = CryptoJS.enc.u8array.parse(ui8a);
+	cryptofile = CryptoJS.AES.encrypt(wordarray, document.getElementById('password').value);
 	cryptoblob = new Blob([cryptofile], { type: document.getElementById('mimetype').innerHTML });
 
 	//encrypt the metadata
