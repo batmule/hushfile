@@ -5,8 +5,8 @@ function download() {
 		if (this.status == 200) {
 			alert("decrypting filedata...");
 			decryptedwords = CryptoJS.AES.decrypt(this.response, password);
-			filedata = hex2bin(decryptedwords.toString());
-			fileblob = new Blob([filedata], { type: document.getElementById('mimetype').innerHTML });
+			ui8a = CryptoJS.enc.u8array.encode(decryptedwords);
+			fileblob = new Blob([ui8a], { type: document.getElementById('mimetype').innerHTML });
 
 			// download prompt
 			a = document.createElement("a");
