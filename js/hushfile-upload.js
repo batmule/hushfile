@@ -121,7 +121,7 @@ function upload(cryptoobject,metadataobject) {
 			if (responseobject.status=='ok') {
 				document.getElementById('uploaddone').className= "icon-check";
 				document.getElementById('uploading').style.color='green';
-				document.getElementById('response').visibility="visible";
+				document.getElementById('response').style.visibility="visible";
 				//get current URL
 				url = window.location.protocol + '://' + window.location.host + '/';
 				document.getElementById('response').innerHTML = '<p><i class="icon-check"></i> <b><span style="color: green;">Success! Your URL is:</span></b><br> <a class="btn btn-success" href="/'+responseobject.fileid+'#'+document.getElementById('password').value+'">'+url+responseobject.fileid+'#'+document.getElementById('password').value+'</a>';
