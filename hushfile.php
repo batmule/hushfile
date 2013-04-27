@@ -31,6 +31,14 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		fwrite($fh, $_REQUEST['metadata']);
 		fclose($fh);
 
+		// send email
+		$to = "thomas@gibfest.dk";
+		$subject = "new file uploaded to hushfile.it";
+		$message = "new file uploaded to hushfile.it: http://hushfile.it/" . $fileid;
+		$from = "upload@hushfile.it";
+		$headers = "From:" . $from;
+		mail($to,$subject,$message,$headers);
+		
 		// encode json reply
 		echo json_encode(array("status" => "ok", "fileid" => $fileid));
 	} else {
