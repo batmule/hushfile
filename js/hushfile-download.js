@@ -47,7 +47,6 @@ xhr.onload = function(e) {
 	if (this.status == 200) {
 		// decrypt metadata
 		metadata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
-		metadata = this.response;
 		try {
 			var jsonmetadata = JSON.parse(metadata);
 			document.getElementById('filename').innerHTML = jsonmetadata.filename;
