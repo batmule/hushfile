@@ -1,6 +1,8 @@
 var download_progress = document.querySelector('.downloadpercent');
 
 function download() {
+	// hide the download button
+	document.getElementById('download').style.visibility="hidden";
 	// make download progress bar div visible
 	document.getElementById('downloading').style.visibility="visible";
 	var xhr = new XMLHttpRequest();
@@ -15,13 +17,11 @@ function download() {
 			document.getElementById('decrypting').style.visibility="visible";
 
 			// decrypt the data
-			alert("decrypting...");
 			decryptedwords = CryptoJS.AES.decrypt(this.response, password);
 			ui8a = CryptoJS.enc.u8array.stringify(decryptedwords);
 			fileblob = new Blob([ui8a], { type: document.getElementById('mimetype').innerHTML });
 
 			//done decrypting, change icon and make div green
-			alert("done decrypting...");
 			document.getElementById('decryptingdone').className="icon-check";
 			document.getElementById('decrypting').style.color='green';
 
