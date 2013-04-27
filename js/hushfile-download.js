@@ -1,23 +1,48 @@
+var download_progress = document.querySelector('.downloadpercent');
+
 function download() {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', '/'+fileid+'?filedata', true);
 	xhr.onload = function(e) {
 		if (this.status == 200) {
-			alert("decrypting filedata...");
+			//done downloading
+			document.getElementById('downloadingdone').className="icon-check";
+			document.getElementById('downloading').style.color='green';
+
+			//make the decrypting div visible
+			document.getElementById('decrypting').style.visibility="visible";
+			document.getElementById('decryptingdone').className="icon-spinner icon-spin";
+
+			// decrypt the data
 			decryptedwords = CryptoJS.AES.decrypt(this.response, password);
 			ui8a = CryptoJS.enc.u8array.stringify(decryptedwords);
 			fileblob = new Blob([ui8a], { type: document.getElementById('mimetype').innerHTML });
+
+			//done decrypting
+			document.getElementById('decryptingdone').className="icon-check";
+			document.getElementById('decrypting').style.color='green';
 
 			// download prompt
 			a = document.createElement("a");
 			a.href = window.URL.createObjectURL(fileblob);
 			a.download = document.getElementById('filename').innerHTML;
-			alert("clicking download link");
-			a.click();
+			document.getElementById('downloaddiv').appendChild(a);
+			document.getElementById('downloaddiv').style.visibility="visible";
 		} else {
 			alert("An error was encountered downloading filedata.");
 		};
 	};
+	
+	// Listen to the download progress.
+	var progressBar = document.querySelector('progress');
+	xhr.download.onprogress = function(e) {
+		if (e.lengthComputable) {
+			temp = Math.round((e.loaded / e.total) * 100);
+			upload_progress.style.width = temp + '%';
+			upload_progress.textContent = temp + '%';
+		};
+	};
+
 	xhr.send();
 };
 
@@ -49,10 +74,10 @@ xhr.onload = function(e) {
 		metadata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
 		try {
 			var jsonmetadata = JSON.parse(metadata);
+			document.getElementById('metadata').style.visibility="visible";
 			document.getElementById('filename').innerHTML = jsonmetadata.filename;
 			document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
 			document.getElementById('filesize').innerHTML = jsonmetadata.filesize;
-			document.getElementById('download').style.visibility="visible";
 		} catch(err) {
 			alert("An error was encountered parsing metadata: " + err);
 		};

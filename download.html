@@ -10,14 +10,38 @@
   </head>
   <body>
     <div class="container">
-        <h1>hushfile.it - download</h1>
-        <table class="table table-condensed">
-            <tr><td>Filename</td><td id="filename">&nbsp;</td></tr>
-            <tr><td>Mime type</td><td id="mimetype">&nbsp;</td></tr>
-            <tr><td>File size</td><td id="filesize">&nbsp;</td></tr>
-        </table>            
-        <button class="btn btn-large btn-primary btn-success" id="download" style="visibility: hidden;" type="button" onclick="download();">Download and decrypt!</button>
+        <h1>hushfile.it</h1>
+        <div id="metadata" style="visibility: hidden;">
+            <div class="alert alert-success">
+                <p>Password accepted, metadata below. Click button to get and decrypt file.</p>
+            </div>
+
+            <table class="table table-condensed">
+                <tr><td>Filename</td><td id="filename">&nbsp;</td></tr>
+                <tr><td>Mime type</td><td id="mimetype">&nbsp;</td></tr>
+                <tr><td>File size</td><td id="filesize">&nbsp;</td></tr>
+            </table>
+            <button class="btn btn-large btn-primary btn-success" id="download" type="button" onclick="download();">Get and decrypt</button>
+        </div>
         
+        <!-- Downloading -->
+        <div id="downloading" style="visibility: hidden;">
+            <p><i id="downloadingdone" class="icon-check-empty"></i> <b>Downloading...</b></p>
+            <div class="progress progress-striped" id="download_progress_bar" style="width: 20em;">
+                <div class="downloadpercent bar bar-success">0%</div>
+            </div></p>
+        </div>
+        
+        <!-- Decrypting -->
+        <div id="decrypting" style="visibility: hidden;">
+            <p><i id="decryptingdone" class="icon-check-empty"></i> <b>Decrypting...</b></p>
+        </div>
+
+        <!-- User Download -->
+        <div id="downloaddiv" style="visibility: hidden;">
+
+        </div>
+
         <div class="navbar navbar-fixed-bottom" style="text-align: center; background: lightblue;">Like this service ? Bitcoin donations to <a href="bitcoin:1LjcmBXuBo5CZqBL1wyCGecmqhT9WMv5QF">1LjcmBXuBo5CZqBL1wyCGecmqhT9WMv5QF</a> are most welcome.<br>Code on <a href="https://github.com/tykling/hushfile" target="_blank">Github</a>. © 2013 Thomas Steen Rasmussen / Tykling. <a href="mailto:admin@hushfile.it">Contact</a> operator.</span></div>
     </div>
     <script src="js/bootstrap.min.js"></script>
