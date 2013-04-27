@@ -143,7 +143,7 @@ function encrypt() {
 	ui8a = new Uint8Array(reader.result);
 	wordarray = CryptoJS.enc.u8array.parse(ui8a);
 	cryptofile = CryptoJS.AES.encrypt(wordarray, document.getElementById('password').value);
-	cryptoblob = new Blob([cryptofile], { type: document.getElementById('mimetype').innerHTML });
+	//cryptoblob = new Blob([cryptofile], { type: document.getElementById('mimetype').innerHTML });
 
 	//encrypt the metadata
 	metadata = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
@@ -156,7 +156,7 @@ function encrypt() {
 	document.getElementById('uploading').style.visibility="visible";
 	document.getElementById('uploaddone').className="icon-spinner icon-spin";
 
-	setTimeout('upload(cryptoblob,metadata)',1000);
+	setTimeout('upload(cryptofile,metadata)',1000);
 }
 
 function upload(cryptofile,metadata) {
