@@ -2,7 +2,7 @@ var download_progress = document.querySelector('.downloadpercent');
 
 function download() {
 	// hide the download button
-	document.getElementById('download').style.visibility="hidden";
+	document.getElementById('download').style.display="none";
 	// make download progress bar div visible
 	document.getElementById('downloading').style.visibility="visible";
 	var xhr = new XMLHttpRequest();
@@ -31,6 +31,7 @@ function download() {
 			a.download = document.getElementById('filename').innerHTML;
 			linkText = document.createTextNode("Download");
 			a.appendChild(linkText);
+			a.class = "btn btn-success";
 			document.getElementById('downloaddiv').appendChild(a);
 			document.getElementById('downloaddiv').style.visibility="visible";
 		} else {
