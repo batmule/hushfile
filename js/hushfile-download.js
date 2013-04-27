@@ -29,6 +29,8 @@ function download() {
 			a = document.createElement("a");
 			a.href = window.URL.createObjectURL(fileblob);
 			a.download = document.getElementById('filename').innerHTML;
+			linkText = document.createTextNode("Download");
+			a.appendChild(linkText);
 			document.getElementById('downloaddiv').appendChild(a);
 			document.getElementById('downloaddiv').style.visibility="visible";
 		} else {
