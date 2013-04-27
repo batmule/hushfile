@@ -133,8 +133,7 @@ function upload(cryptoobject,metadataobject) {
 		};
 	};
 
-	// Listen to the upload progress.
-	var progressBar = document.querySelector('progress');
+	// Listen to the upload progress
 	xhr.upload.onprogress = function(e) {
 		if (e.lengthComputable) {
 			temp = Math.round((e.loaded / e.total) * 100);

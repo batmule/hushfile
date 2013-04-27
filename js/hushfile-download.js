@@ -34,8 +34,7 @@ function download() {
 	};
 	
 	// Listen to the download progress.
-	var progressBar = document.querySelector('progress');
-	xhr.download.onprogress = function(e) {
+	xhr.onprogress = function(e) {
 		if (e.lengthComputable) {
 			temp = Math.round((e.loaded / e.total) * 100);
 			upload_progress.style.width = temp + '%';
