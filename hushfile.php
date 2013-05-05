@@ -45,6 +45,12 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		header("Status: 400 Bad Request");
 		die(json_encode(array("status" => "invalid upload request, missing file or metadata content, error", "fileid" => "")));
 	}
+} elseif($_SERVER["REQUEST_URI"] == "/about") {
+	// show about page
+	readfile("about.html");
+} elseif($_SERVER["REQUEST_URI"] == "/faq") {
+	// show FAQ
+	readfile("faq.html");
 } elseif($_SERVER["REQUEST_URI"] != "/") {
 	// THIS IS A FILE DOWNLOAD
 	if(strpos($_SERVER['REQUEST_URI'],"?") === false) {
