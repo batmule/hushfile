@@ -42,6 +42,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		// encode json reply
 		echo json_encode(array("status" => "ok", "fileid" => $fileid));
 	} else {
+		header("Status: 400 Bad Request");
 		die(json_encode(array("status" => "invalid upload request, missing file or metadata content, error", "fileid" => "")));
 	}
 } elseif($_SERVER["REQUEST_URI"] != "/") {
@@ -52,7 +53,8 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		if (file_exists($datapath.$fileid)) {
 			readfile("download.html");
 		} else {
-			echo "fileid " . $fileid . " not found, expired perhaps?";
+			header("Status: 404 Not Found");
+			readfile("errorpages/invalidfileid.html");
 		};
 	} else {
 		//get fileid
@@ -75,17 +77,14 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 				$fp = fopen($file, "r");
 				while (!feof($fp)) {
 					echo fread($fp, 65536);
-					flush(); // this is essential for large downloads
+					flush(); // for large downloads
 				} 
 				fclose($fp);
 			break;
 			default:
-				// invalid command, load regular download page
-				if (file_exists($datapath.$fileid)) {
-					readfile("download.html");
-				} else {
-					echo "fileid " . $fileid . " not found, expired perhaps?";
-				};
+				// invalid command, show error page
+				header("Status: 400 Bad Request");
+				readfile("errorpages/invalidcommand.html");
 			break;
 		};
 	};
