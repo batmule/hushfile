@@ -43,8 +43,8 @@ function download() {
 	xhr.onprogress = function(e) {
 		if (e.lengthComputable) {
 			temp = Math.round((e.loaded / e.total) * 100);
-			upload_progress.style.width = temp + '%';
-			upload_progress.textContent = temp + '%';
+			download_progress.style.width = temp + '%';
+			download_progress.textContent = temp + '%';
 		};
 	};
 
