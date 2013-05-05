@@ -5,39 +5,34 @@
             document.getElementById("faq").className="";
         </script>
         <form class="form-horizontal">
-            <fieldset>
-                <legend>Upload file</legend>
-                <div class="alert alert-info fade in">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <h4>Welcome!</h4>
-                    hushfile.it is a file sharing site where the file is <b>encrypted before upload</b>. 
-                    This enables you to share files while <b>keeping them private</b> from server operators or eavesdroppers. 
-                    Just pick a file and it will be <b>encrypted in your browser</b> before it is uploaded. 
-                    When the process is finished you will receive a link which you can share with anyone you wish. 
-                    Just <b>keep the link secret</b>, it contains the password to decrypt the file!
-                </div>
-                
-                <div class="fileupload fileupload-new" data-provides="fileupload">
-                    <div class="input-append">
-                        <div class="uneditable-input span3">
-                            <i class="icon-file fileupload-exists"></i> 
-                            <span class="fileupload-preview"></span>
-                        </div>
-                        <span class="btn btn-file"><span class="fileupload-new">Select file</span>
-                            <span class="fileupload-exists">Change</span>
-                            <input type="file" id="files" name="file">
-                        </span>
-                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-                    </div>
-                </div>
-
+            <div class="alert alert-info fade in">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Welcome!</h4>
+                hushfile.it is a file sharing site where the file is <b>encrypted before upload</b>. 
+                This enables you to share files while <b>keeping them private</b> from server operators or eavesdroppers. 
+                Just pick a file and it will be <b>encrypted in your browser</b> before it is uploaded. 
+                When the process is finished you will receive a link which you can share with anyone you wish. 
+                Just <b>keep the link secret</b>, it contains the password to decrypt the file!
+            </div>
+            
+            <div class="fileupload fileupload-new" data-provides="fileupload">
                 <div class="input-append">
-                    <input class="input-large" type="text" id="password" name="password">
-                     <span class="add-on">Password</span>
+                    <div class="uneditable-input span3">
+                        <i class="icon-file fileupload-exists"></i> 
+                        <span class="fileupload-preview"></span>
+                    </div>
+                    <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+                        <span class="fileupload-exists">Change</span>
+                        <input type="file" id="files" name="file">
+                    </span>
+                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                 </div>
-                    
+            </div>
 
-            </fieldset>
+            <div class="input-append">
+                <input class="input-large" type="text" id="password" name="password">
+                 <span class="add-on">Password</span>
+            </div>
         </form>
 
         
