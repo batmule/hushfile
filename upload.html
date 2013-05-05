@@ -1,27 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>hushfile.it</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="css/bootstrap-fileupload.min.css" rel="stylesheet" media="screen">
-    <link href="css/font-awesome.min.css" rel="stylesheet" media="screen">
-    <link href="css/progressbar.css" rel="stylesheet" media="screen">
-  </head>
-  <body>
-    <div class="container">
+        <!--# include file="header.html" -->
         <form class="form-horizontal">
             <fieldset>
-                <legend>hushfile.it</legend>
+                <legend>hushfile.it - upload file</legend>
                 
                 <div class="alert alert-info">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <h4>Welcome!</h4>
-                    hushfile.it is a file sharing site where the file is encrypted before upload. 
-                    Just pick a file and it will be encrypted and uploaded automatically. 
+                    hushfile.it is a file sharing site where the file is <b>encrypted before upload</b>. 
+                    This enables you to share files while <b>keeping them private</b> from server operators or eavesdroppers. 
+                    Just pick a file and it will be <b>encrypted in your browser</b> before it is uploaded. 
                     When the process is finished you will receive a link which you can share with anyone you wish. 
-                    Just keep the link secret, it contains the password to decrypt the file!
+                    Just <b>keep the link secret</b>, it contains the password to decrypt the file!
                 </div>
                 
                 <div class="fileupload fileupload-new" data-provides="fileupload">
@@ -82,12 +70,4 @@
             <h4>Response</h4>
         </div>
         
-
-    <div class="navbar navbar-fixed-bottom" style="text-align: center; background: lightblue;">Like this service ? Bitcoin donations to <a href="bitcoin:1LjcmBXuBo5CZqBL1wyCGecmqhT9WMv5QF">1LjcmBXuBo5CZqBL1wyCGecmqhT9WMv5QF</a> are most welcome.<br>Code on <a href="https://github.com/tykling/hushfile" target="_blank">Github</a>. &copy; 2013 Thomas Steen Rasmussen / Tykling - <a href="mailto:admin@hushfile.it">e-mail operator</a> - <a href="https://github.com/tykling/hushfile/issues/">report issue</a></div>
-    </div>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
-    <script src="js/cryptojs-uint8.js"></script>
-    <script src="js/hushfile-upload.js"></script>
-  </body>
-</html>
+        <!--# include file="footer.html" -->
