@@ -62,11 +62,20 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		switch($command) {
 			case "metadata":
 				//download metadata.dat file
-				readfile($datapath.$fileid."/metadata.dat");
+				$file = $datapath.$fileid."/metadata.dat"
+				header("Content-Length: " . filesize($file));
+				readfile($file);
 			break;
 			case "filedata":
 				//download cryptofile.dat file
-				readfile($datapath.$fileid."/cryptofile.dat");
+				$file = $datapath.$fileid."/cryptofile.dat";
+				header("Content-Length: " . filesize($file));
+				$fp = fopen($file, "r");
+				while (!feof($fp)) {
+					echo fread($fp, 65536);
+					flush(); // this is essential for large downloads
+				} 
+				fclose($fp);
 			break;
 			default:
 				// invalid command, load regular download page
