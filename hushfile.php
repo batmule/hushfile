@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		switch($command) {
 			case "metadata":
 				//download metadata.dat file
-				$file = $datapath.$fileid."/metadata.dat"
+				$file = $datapath.$fileid."/metadata.dat";
 				header("Content-Length: " . filesize($file));
 				readfile($file);
 			break;
