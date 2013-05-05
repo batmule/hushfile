@@ -78,7 +78,11 @@ function handleFileSelect(evt) {
 
 	// get file info and show it to the user
 	filename = evt.target.files[0].name;
-	mimetype = evt.target.files[0].type;
+	if(evt.target.files[0].type === 'undefined') {
+		mimetype = "application/octet-stream";
+	} else {
+		mimetype = evt.target.files[0].type;
+	}
 	filesize = evt.target.files[0].size;
 	document.getElementById('filename').innerHTML = filename;
 	document.getElementById('mimetype').innerHTML = mimetype;

@@ -42,19 +42,21 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		// encode json reply
 		echo json_encode(array("status" => "ok", "fileid" => $fileid));
 	} else {
-		die(json_encode(array("status" => "invalid request, missing content", "fileid" => "")));
+		die(json_encode(array("status" => "invalid upload request, missing file or metadata content, error", "fileid" => "")));
 	}
 } elseif($_SERVER["REQUEST_URI"] != "/") {
 	// THIS IS A FILE DOWNLOAD
-	$fileid = substr($_SERVER['REQUEST_URI'],1,strpos($_SERVER['REQUEST_URI'],"?"));
 	if(strpos($_SERVER['REQUEST_URI'],"?") === false) {
 		// THIS IS A DOWNLOAD REQUEST
+		$fileid = substr($_SERVER['REQUEST_URI'],1);
 		if (file_exists($datapath.$fileid)) {
 			readfile("download.html");
 		} else {
 			echo "fileid " . $fileid . " not found, expired perhaps?";
 		};
 	} else {
+		//get fileid
+		$fileid = substr($_SERVER['REQUEST_URI'],1,strpos($_SERVER['REQUEST_URI'],"?"));
 		//get command
 		$command = substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],"?")+1);
 		//remove ? from fileid

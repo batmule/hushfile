@@ -76,15 +76,22 @@ xhr.open('GET', '/'+fileid+'?metadata', true);
 xhr.onload = function(e) {
 	if (this.status == 200) {
 		// decrypt metadata
-		metadata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
 		try {
-			var jsonmetadata = JSON.parse(metadata);
-			document.getElementById('metadata').style.visibility="visible";
-			document.getElementById('filename').innerHTML = jsonmetadata.filename;
-			document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
-			document.getElementById('filesize').innerHTML = jsonmetadata.filesize;
+			metadata = CryptoJS.AES.decrypt(this.response, password).toString(CryptoJS.enc.Utf8);
 		} catch(err) {
-			alert("An error was encountered parsing metadata: " + err);
+			alert("An error was encountered decrypting metadata: " + err);
+		};
+		
+		if(metadata != 'undefined') {
+			try {
+				var jsonmetadata = JSON.parse(metadata);
+				document.getElementById('metadata').style.visibility="visible";
+				document.getElementById('filename').innerHTML = jsonmetadata.filename;
+				document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
+				document.getElementById('filesize').innerHTML = jsonmetadata.filesize;
+			} catch(err) {
+				alert("An error was encountered parsing metadata: " + err);
+			};
 		};
 	} else {
 		alert("An error was encountered downloading metadata.");
