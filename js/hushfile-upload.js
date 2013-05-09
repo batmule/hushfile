@@ -113,7 +113,7 @@ function encrypt() {
 	document.getElementById('uploading').style.visibility="visible";
 	document.getElementById('uploaddone').className="icon-spinner icon-spin";
 
-	setTimeout('upload(cryptoobject,metadataobject)',1000);
+	setTimeout('upload(cryptoobject,metadataobject,deletepass)',1000);
 }
 
 function upload(cryptoobject,metadataobject,deletepass) {
