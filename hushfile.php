@@ -131,7 +131,8 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 					//incorrect password
 					header("Status: 401 Unauthorized");
 					readfile("errorpages/incorrectdeletepass.html");
-				}
+				};
+			break;
 			default:
 				// invalid command, show error page
 				header("Status: 400 Bad Request");
