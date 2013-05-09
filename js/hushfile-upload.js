@@ -98,8 +98,12 @@ function encrypt() {
 	wordarray = CryptoJS.enc.u8array.parse(ui8a);
 	cryptoobject = CryptoJS.AES.encrypt(wordarray, document.getElementById('password').value);
 
+	//generate deletepassword
+	deletepass = randomPassword(40);
+	
 	//encrypt the metadata
-	metadataobject = CryptoJS.AES.encrypt('{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'"}', document.getElementById('password').value);
+	metadatajson = '{"filename": "'+filename+'", "mimetype": "'+mimetype+'", "filesize": "'+filesize+'", "deletepassword": "' + deletepass + '"}'
+	metadataobject = CryptoJS.AES.encrypt(metadatajson, document.getElementById('password').value);
 
 	//done encrypting
 	document.getElementById('encryptingdone').className="icon-check";
@@ -112,7 +116,7 @@ function encrypt() {
 	setTimeout('upload(cryptoobject,metadataobject)',1000);
 }
 
-function upload(cryptoobject,metadataobject) {
+function upload(cryptoobject,metadataobject,deletepass) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', '/upload', true);
 	xhr.onload = function(e) {
@@ -148,6 +152,7 @@ function upload(cryptoobject,metadataobject) {
 	var formData = new FormData();
 	formData.append('cryptofile', cryptoobject);
 	formData.append('metadata', metadataobject);
+	formData.append('deletepassword', deletepass);
 	xhr.send(formData);
 };
 

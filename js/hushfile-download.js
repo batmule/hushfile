@@ -25,7 +25,7 @@ function download() {
 			document.getElementById('decryptingdone').className="icon-check";
 			document.getElementById('decrypting').style.color='green';
 
-			// download prompt
+			// download button
 			a = document.createElement("a");
 			a.href = window.URL.createObjectURL(fileblob);
 			a.download = document.getElementById('filename').innerHTML;
@@ -33,6 +33,16 @@ function download() {
 			a.appendChild(linkText);
 			a.className = "btn btn-success";
 			document.getElementById('downloaddiv').appendChild(a);
+			
+			// delete button
+			a = document.createElement("a");
+			a.href = "/" + fileid + "?delete&deletepassword=" + document.getElementById('deletepassword').innerHTML;
+			linkText = document.createTextNode("Delete");
+			a.appendChild(linkText);
+			a.className = "btn btn-success";
+			document.getElementById('downloaddiv').appendChild(a);
+			
+			//make div visible
 			document.getElementById('downloaddiv').style.visibility="visible";
 		} else {
 			alert("An error was encountered downloading filedata.");
@@ -89,6 +99,7 @@ xhr.onload = function(e) {
 				document.getElementById('filename').innerHTML = jsonmetadata.filename;
 				document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
 				document.getElementById('filesize').innerHTML = jsonmetadata.filesize;
+				document.getElementById('deletepassword').innerHTML = jsonmetadata.deletepassword;
 			} catch(err) {
 				alert("An error was encountered parsing metadata: " + err);
 			};

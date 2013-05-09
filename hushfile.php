@@ -12,23 +12,30 @@ function get_uniqid() {
 
 if($_SERVER["REQUEST_URI"] == "/upload") {
 	// THIS IS A FILE UPLOAD
-	if(isset($_REQUEST['cryptofile']) && isset($_REQUEST['metadata'])) {
+	if(isset($_REQUEST['cryptofile']) && isset($_REQUEST['metadata']) && isset($_REQUEST['deletepassword'])) {
 		// first get a new unique ID for this file
 		$fileid = get_uniqid();
 		$cryptofile = $datapath.$fileid."/cryptofile.dat";
 		$metadatafile = $datapath.$fileid."/metadata.dat";
+		$serverdatafile = $datapath.$fileid."/serverdata.json";
 		
 		// create folder for this file
 		mkdir($datapath.$fileid);
-		
+
 		// write encrypted file
 		$fh = fopen($cryptofile, 'w') or die(json_encode(array("status" => "unable to write cryptofile", "fileid" => "")));
 		fwrite($fh, $_REQUEST['cryptofile']);
 		fclose($fh);
 
-		//write metadata file
+		// write metadata file
 		$fh = fopen($metadatafile, 'w') or die(json_encode(array("status" => "unable to write metadatafile", "fileid" => "")));
 		fwrite($fh, $_REQUEST['metadata']);
+		fclose($fh);
+
+		// write serverdata file
+		$fh = fopen($serverdatafile, 'w') or die(json_encode(array("status" => "unable to write serverdatafile", "fileid" => "")));
+		$json = json_encode(array("deletepassword" => $_REQUEST['deletepassword']));
+		fwrite($fh, $json);
 		fclose($fh);
 
 		// send email
@@ -43,7 +50,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		echo json_encode(array("status" => "ok", "fileid" => $fileid));
 	} else {
 		header("Status: 400 Bad Request");
-		die(json_encode(array("status" => "invalid upload request, missing file or metadata content, error", "fileid" => "")));
+		die(json_encode(array("status" => "invalid upload request, missing file or metadata content or deletepassword, error", "fileid" => "")));
 	}
 } elseif($_SERVER["REQUEST_URI"] == "/about") {
 	// show about page
@@ -87,6 +94,28 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 				} 
 				fclose($fp);
 			break;
+			case "delete":
+				//get deletepassword from $_GET
+				$vars = parse_url($_SERVER['REQUEST_URI');
+				
+				//get deletepassword from serverdata.json
+				$file = $datapath.$fileid."/serverdata.json";
+				$fh = fopen($file, 'r');
+				$serverdata = fread($fh, filesize($file));
+				fclose($fh);
+				
+				//check if passwords match
+				if($vars['deletepassword'] == $serverdata['deletepassword']) {
+					//password valid! delete stuff
+					unlink($datapath.$fileid."/serverdata.json");
+					unlink($datapath.$fileid."/metadata.dat");
+					unlink($datapath.$fileid."/cryptofile.dat");
+					rmdir($datapath.$fileid);
+				} else {
+					//incorrect password
+					header("Status: 401 Unauthorized");
+					readfile("errorpages/incorrectdeletepass.html");
+				}
 			default:
 				// invalid command, show error page
 				header("Status: 400 Bad Request");
