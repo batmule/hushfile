@@ -118,6 +118,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 				$fh = fopen($file, 'r');
 				$serverdata = fread($fh, filesize($file));
 				fclose($fh);
+				$serverdata = json_decode($serverdata,true);
 				
 				//check if passwords match
 				if($deletepass == $serverdata['deletepassword']) {
