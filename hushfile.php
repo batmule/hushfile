@@ -96,7 +96,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 			break;
 			case "delete":
 				//get deletepassword from $_GET
-				$vars = parse_url($_SERVER['REQUEST_URI');
+				$vars = parse_url($_SERVER['REQUEST_URI']);
 				
 				//get deletepassword from serverdata.json
 				$file = $datapath.$fileid."/serverdata.json";
