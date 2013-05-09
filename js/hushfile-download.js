@@ -34,14 +34,6 @@ function download() {
 			a.className = "btn btn-success";
 			document.getElementById('downloaddiv').appendChild(a);
 			
-			// delete button
-			a = document.createElement("a");
-			a.href = "/" + fileid + "?delete&deletepassword=" + document.getElementById('deletepassword').innerHTML;
-			linkText = document.createTextNode("Delete");
-			a.appendChild(linkText);
-			a.className = "btn btn-success";
-			document.getElementById('downloaddiv').appendChild(a);
-			
 			//make div visible
 			document.getElementById('downloaddiv').style.visibility="visible";
 		} else {
@@ -99,7 +91,7 @@ xhr.onload = function(e) {
 				document.getElementById('filename').innerHTML = jsonmetadata.filename;
 				document.getElementById('mimetype').innerHTML = jsonmetadata.mimetype;
 				document.getElementById('filesize').innerHTML = jsonmetadata.filesize;
-				document.getElementById('deletepassword').innerHTML = jsonmetadata.deletepassword;
+				document.getElementById('delete').href = "/" + fileid + "?delete&deletepassword=" + jsonmetadata.deletepassword;
 			} catch(err) {
 				alert("An error was encountered parsing metadata: " + err);
 			};
