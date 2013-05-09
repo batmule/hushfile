@@ -135,6 +135,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 					unlink($datapath.$fileid."/metadata.dat");
 					unlink($datapath.$fileid."/cryptofile.dat");
 					rmdir($datapath.$fileid);
+					readfile("pages/deleteok.html");
 				} else {
 					//incorrect password
 					header("Status: 401 Unauthorized");
