@@ -83,8 +83,9 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		
 		//get command
 		$command = substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],"?")+1);
-		$command = substr($command,0,strpos($command,"&"));
-
+		if(strpos($command,"&") != false) {
+			$command = substr($command,0,strpos($command,"&"));
+		};
 
 		switch($command) {
 			case "metadata":
