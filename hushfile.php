@@ -72,13 +72,20 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 	} else {
 		//get fileid
 		$fileid = substr($_SERVER['REQUEST_URI'],1,strpos($_SERVER['REQUEST_URI'],"?"));
+		//remove ? from fileid
+		$fileid = substr($fileid,0,-1);
+		//check if fileid is invalid
+		if (!file_exists($datapath.$fileid)) {
+			header("Status: 404 Not Found");
+			readfile("errorpages/invalidfileid.html");
+			die();
+		};
+		
 		//get command
 		$command = substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],"?")+1);
 		$command = substr($command,0,strpos($command,"&"));
 
 
-		//remove ? from fileid
-		$fileid = substr($fileid,0,-1);
 		switch($command) {
 			case "metadata":
 				//download metadata.dat file
