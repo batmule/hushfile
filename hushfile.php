@@ -74,6 +74,9 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 		$fileid = substr($_SERVER['REQUEST_URI'],1,strpos($_SERVER['REQUEST_URI'],"?"));
 		//get command
 		$command = substr($_SERVER['REQUEST_URI'],strpos($_SERVER['REQUEST_URI'],"?")+1);
+		$command = substr($command,0,strpos($command,"&"));
+
+
 		//remove ? from fileid
 		$fileid = substr($fileid,0,-1);
 		switch($command) {
@@ -96,7 +99,19 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 			break;
 			case "delete":
 				//get deletepassword from $_GET
-				$vars = parse_url($_SERVER['REQUEST_URI']);
+				$url = parse_url($_SERVER['REQUEST_URI']);
+				$vars = explode("&",$url['query']);
+				foreach($vars as $element) {
+						if(strpos($element,"=") === false) {
+								$key = $element;
+						} else {
+								$key = substr($element,0,strpos($element,"="));
+								$value = substr($element,strpos($element,"=")+1);
+						};
+						if($key=="deletepassword") {
+							$deletepass = $key;
+						};
+				};
 				
 				//get deletepassword from serverdata.json
 				$file = $datapath.$fileid."/serverdata.json";
@@ -105,7 +120,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 				fclose($fh);
 				
 				//check if passwords match
-				if($vars['deletepassword'] == $serverdata['deletepassword']) {
+				if($deletepass == $serverdata['deletepassword']) {
 					//password valid! delete stuff
 					unlink($datapath.$fileid."/serverdata.json");
 					unlink($datapath.$fileid."/metadata.dat");
