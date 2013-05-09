@@ -109,7 +109,7 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 								$value = substr($element,strpos($element,"=")+1);
 						};
 						if($key=="deletepassword") {
-							$deletepass = $key;
+							$deletepass = $value;
 						};
 				};
 				
