@@ -92,12 +92,16 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 				//download metadata.dat file
 				$file = $datapath.$fileid."/metadata.dat";
 				header("Content-Length: " . filesize($file));
+				header("Content-Type: text/plain");
+				flush();
 				readfile($file);
 			break;
 			case "filedata":
 				//download cryptofile.dat file
 				$file = $datapath.$fileid."/cryptofile.dat";
 				header("Content-Length: " . filesize($file));
+				header("Content-Type: text/plain");
+				flush();
 				$fp = fopen($file, "r");
 				while (!feof($fp)) {
 					echo fread($fp, 65536);
@@ -152,5 +156,5 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 } else {
 	// THIS IS A NEW REQUEST, SHOW UPLOAD FORM
 	readfile("upload.html");
-}
+};
 ?>
