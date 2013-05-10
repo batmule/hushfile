@@ -29,7 +29,10 @@ function download() {
 			a = document.createElement("a");
 			a.href = window.URL.createObjectURL(fileblob);
 			a.download = document.getElementById('filename').innerHTML;
-			linkText = document.createTextNode("Download");
+			linkText = document.createTextNode(" Download");
+			i = document.createElement("i");
+			i.className="icon-save icon-large";
+			a.appendChild(i);
 			a.appendChild(linkText);
 			a.className = "btn btn-large btn-primary btn-success";
 			document.getElementById('downloaddiv').appendChild(a);

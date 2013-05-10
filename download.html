@@ -10,8 +10,8 @@
                 <tr><td>Mime type</td><td id="mimetype">&nbsp;</td></tr>
                 <tr><td>File size</td><td id="filesize">&nbsp;</td></tr>
             </table>
-            <button class="btn btn-large btn-primary btn-success" id="download" type="button" onclick="download();">Get and decrypt</button>
-            <a href="" class="btn btn-large btn-primary btn-danger" id="delete">Delete file</a>
+            <button class="btn btn-large btn-primary btn-success" id="download" type="button" onclick="download();"><i class="icon-cloud-download icon-large"></i> Get and decrypt</button>
+            <a href="" class="btn btn-large btn-primary btn-danger" id="delete"><i class="icon-trash icon-large"></i> Delete file</a>
         </div>
         
         <!-- Downloading -->
@@ -19,7 +19,7 @@
             <p><i id="downloadingdone" class="icon-spinner icon-spin"></i> <b>Downloading...</b></p>
             <div class="progress progress-striped" id="download_progress_bar" style="width: 20em;">
                 <div class="downloadpercent bar bar-success">0%</div>
-            </div></p>
+            </div>
         </div>
         
         <!-- Decrypting -->
