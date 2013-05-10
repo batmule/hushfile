@@ -31,7 +31,7 @@ function download() {
 			a.download = document.getElementById('filename').innerHTML;
 			linkText = document.createTextNode("Download");
 			a.appendChild(linkText);
-			a.className = "btn btn-success";
+			a.className = "btn btn-large btn-primary btn-success";
 			document.getElementById('downloaddiv').appendChild(a);
 			
 			//make div visible
