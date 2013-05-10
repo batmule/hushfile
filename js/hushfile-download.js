@@ -105,3 +105,17 @@ xhr.onload = function(e) {
 };
 
 xhr.send();
+
+// get and show client IP
+var ipxhr = new XMLHttpRequest();
+ipxhr.open('GET', '/'+fileid+'?ip', true);
+
+ipxhr.onload = function(e) {
+	if (this.status == 200) {
+		document.getElementById('clientip').innerHTML = this.response;
+	} else {
+		alert("An error was encountered downloading metadata.");
+	};
+};
+
+ipxhr.send();

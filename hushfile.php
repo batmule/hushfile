@@ -34,7 +34,10 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 
 		// write serverdata file
 		$fh = fopen($serverdatafile, 'w') or die(json_encode(array("status" => "unable to write serverdatafile", "fileid" => "")));
-		$json = json_encode(array("deletepassword" => $_REQUEST['deletepassword']));
+		$json = json_encode(array(
+			"deletepassword" => $_REQUEST['deletepassword'],
+			"clientip" => $_SERVER['REMOTE_ADDR']
+		));
 		fwrite($fh, $json);
 		fclose($fh);
 
@@ -145,6 +148,15 @@ if($_SERVER["REQUEST_URI"] == "/upload") {
 					header("Status: 401 Unauthorized");
 					readfile("errorpages/incorrectdeletepass.html");
 				};
+			break;
+			case "ip":
+				//return the ip that uploaded this file
+				$file = $datapath.$fileid."/serverdata.json";
+				$fh = fopen($file, 'r');
+				$serverdata = fread($fh, filesize($file));
+				fclose($fh);
+				$serverdata = json_decode($serverdata,true);
+				echo $serverdata['clientip'];
 			break;
 			default:
 				// invalid command, show error page
