@@ -2,7 +2,7 @@ var download_progress = document.querySelector('.downloadpercent');
 
 function download() {
 	// hide the download button
-	document.getElementById('download').style.display="none";
+	document.getElementById('download').className="btn btn-large btn-primary btn-success disabled";
 	// make download progress bar div visible
 	document.getElementById('downloading').style.visibility="visible";
 	var xhr = new XMLHttpRequest();
